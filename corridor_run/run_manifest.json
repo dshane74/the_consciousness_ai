@@ -1,0 +1,29 @@
+{
+  "schema": "consciousness-ai.corridor-handoff-manifest.v1",
+  "repository": {
+    "advertised_url": "https://github.com/tlcdv/the_consciousness_ai.git",
+    "configured_remote": null,
+    "branch": "work",
+    "starting_head": "4fedd5ee293d4eff49831a05dffef1811299c823",
+    "initial_status": "clean"
+  },
+  "baseline": {
+    "environment": "wcst",
+    "seed": 1701,
+    "episodes": 1,
+    "max_steps": 10,
+    "existence_drive": "on",
+    "command": "python -m scripts.training.train_rlhf --env wcst --episodes 1 --max-steps 10 --seed 1701 --existence-drive on --log-dir corridor_run/metrics --corridor-evidence corridor_run/native_evidence.jsonl --record-episodes none"
+  },
+  "platform": {
+    "os": "Linux x86_64 6.18.44",
+    "python": "3.12.13",
+    "torch": "2.14.0+cu130",
+    "cuda_available": false,
+    "logical_cpus": 3
+  },
+  "checkpoints": [],
+  "corridor_repository_found": false,
+  "elapsed_seconds": 12.346,
+  "evidence_sha256": "bd98c3c08838ae62cd72fbce2bdb155056ad00286f62b628b8f5b76c5b0abc95"
+}

@@ -52,6 +52,10 @@ memory_state.pkl
 # Training runs (large, reproducible)
 runs/
 
+# Reproducible binary telemetry from the committed Corridor handoff run.
+# Text evidence and manifests under corridor_run remain trackable.
+/corridor_run/metrics/*.npy
+
 docs/markdowns/
 
 # Provenance verification (local only)

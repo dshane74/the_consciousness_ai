@@ -19,6 +19,7 @@ import os
 import argparse
 import logging
 import random
+import subprocess
 
 import numpy as np
 import torch
@@ -83,6 +84,7 @@ from models.evaluation.levin_consciousness_metrics import LevinConsciousnessEval
 from models.memory.optimized_store import MemoryConsolidationManager
 from scripts.training.metrics_logger import ConsciousnessMetricsLogger, StepMetrics
 from simulations.environments._stimulus_renderer import SHAPE_NAMES, COLOR_NAMES
+from corridor_evaluation.observer import CorridorObserver, digest as evidence_digest
 
 # Label-to-index maps for the latent identity gate (--enable-latent-id). The DMTS env
 # reports sample_shape / sample_color by name in info; the head trains on indices.
@@ -1002,7 +1004,7 @@ def run_episode(episode_idx, config, tectum, workspace, reentrant,
                 wm_predict_head=None, wm_predict_optimizer=None,
                 latent_id_head=None, latent_id_optimizer=None,
                 latent_contrastive_head=None, latent_contrastive_optimizer=None,
-                session_recorder=None):
+                session_recorder=None, corridor_observer=None):
     device = config["device"]
     max_steps = config["max_steps"]
 
@@ -1539,8 +1541,10 @@ def run_episode(episode_idx, config, tectum, workspace, reentrant,
 
         # Discrete environments (DMTS, WCST): convert continuous action to int
         env_action = action
+        action_source = "policy_continuous"
         if hasattr(env, 'action_space') and hasattr(env.action_space, 'n'):
             env_action = int(np.argmax(action[:env.action_space.n]))
+            action_source = "policy_argmax"
 
         # --- DMTS supervised match head ---
         # The current decision phase and target come from the PRE-step `info` (the
@@ -1559,6 +1563,7 @@ def run_episode(episode_idx, config, tectum, workspace, reentrant,
                 if _mh_mode != "aux":
                     match_logits = match_head(policy_state)
                     env_action = int(match_logits.argmax(dim=1)[0].item())
+                    action_source = "dmts_match_head_override"
                     if _mh_batched:
                         # Store the choice record; training happens on schedule.
                         match_head.remember(policy_state, match_decision)
@@ -1621,8 +1626,34 @@ def run_episode(episode_idx, config, tectum, workspace, reentrant,
                 _c_prev_trial = _c_step_trial
             _c_prev_phase = _c_phase
 
+        observation_info = dict(info) if isinstance(info, dict) else {}
         next_obs, env_reward, terminated, truncated, info = env.step(env_action)
         done = terminated or truncated
+        if corridor_observer is not None:
+            cognitive = {
+                "is_conscious": bool(is_conscious),
+                "ignition_salience": ignition_salience,
+                "reentrant_cycles": getattr(settle_result, "cycles", None),
+                "rssm_h_state": (evidence_digest(tectum.h_state.detach().cpu().numpy())
+                                 if getattr(tectum, "h_state", None) is not None else None),
+                "rssm_z_state": (evidence_digest(tectum.z_state.detach().cpu().numpy())
+                                 if getattr(tectum, "z_state", None) is not None else None),
+                "prediction_error": float(vision_bid),
+                "critic_value": float(value),
+                "rpe_used_for_selection": 0.0,
+            }
+            corridor_observer.record(
+                episode=episode_idx, step=step, observation=obs,
+                observation_info=observation_info, proposed_action=action,
+                dispatched_action=env_action, action_source=action_source,
+                result_observation=next_obs, reward=env_reward,
+                terminated=terminated, truncated=truncated,
+                result_info=info if isinstance(info, dict) else {},
+                candidates=raw_bids,
+                winner=(workspace.state.winners[0]
+                        if getattr(workspace.state, "winners", None) else None),
+                cognitive=cognitive,
+            )
         # Learned valence: the EXTERNAL task reward only (ethics rule E2).
         if getattr(modulator, "learned_valence", None) is not None:
             modulator.learned_valence.observe(raw_bids, reward=env_reward)
@@ -2276,6 +2307,8 @@ def main():
                              "stream so the trial sequence is unchanged. Default 0.0 "
                              "renders bit-identically to the pre-2026-07 environment.")
     parser.add_argument("--log-dir", type=str, default="runs", help="Directory for metrics logs")
+    parser.add_argument("--corridor-evidence", type=str, default=None,
+                        help="Observer-only JSONL evidence path (must not already exist).")
     parser.add_argument("--log-ei-every", type=int, default=50,
                         help="Compute EI every N episodes (0 to disable)")
     parser.add_argument("--log-ce2-every", type=int, default=0,
@@ -2970,6 +3003,16 @@ def main():
             "wm_predict_head": wm_predict_head, "latent_id_head": latent_id_head,
             "latent_contrastive_head": latent_contrastive_head}))
     rewards_history = []
+    corridor_observer = None
+    if args.corridor_evidence:
+        head = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], text=True
+        ).strip()
+        corridor_observer = CorridorObserver(
+            args.corridor_evidence,
+            run_id=f"{head[:12]}-{args.env}-seed-{args.seed}",
+            seed=args.seed, environment=args.env,
+        )
     global_step = 0
     for ep in range(args.episodes):
         logger.info(f"Episode {ep + 1}/{args.episodes}")
@@ -3008,6 +3051,7 @@ def main():
             latent_contrastive_head=latent_contrastive_head,
             latent_contrastive_optimizer=latent_contrastive_optimizer,
             session_recorder=session_recorder,
+            corridor_observer=corridor_observer,
         )
         global_step += ep_steps
 
@@ -3136,6 +3180,8 @@ def main():
                  y=np.array(config["_cap_y"], dtype=np.int64))
         logger.info(f"Saved {len(config['_cap_y'])} choice records to {cap_path}")
 
+    if corridor_observer is not None:
+        corridor_observer.close()
     metrics_logger.close()
     env.close()
     logger.info("Training complete.")

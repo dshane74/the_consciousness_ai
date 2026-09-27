@@ -1,0 +1,15 @@
+{
+  "framework_version": "1.0",
+  "entry_point": "train_rlhf",
+  "existence_drive": "on",
+  "growth_stage": "L0",
+  "rules_checked": [
+    "E1",
+    "E3"
+  ],
+  "violations": [],
+  "noxious_channels_present": [],
+  "git_commit": "4fedd5ee293d4eff49831a05dffef1811299c823",
+  "git_tracked_changes": true,
+  "utc_time": "2026-09-27T15:43:00+00:00"
+}

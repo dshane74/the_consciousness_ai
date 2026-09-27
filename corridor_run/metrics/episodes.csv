@@ -1,0 +1,2 @@
+episode,total_reward,steps,avg_phi,consciousness_ratio,consciousness_ratio_raw,ei_gates,ei_workspace,ei_ratio,ei_gates_corr,ei_workspace_corr,ei_ratio_corr,ce2_gates,ce2_workspace,ce2_ratio,ce2_complexity_gates,ce2_complexity_workspace,ce2_rssm,ce2_complexity_rssm,ce2_gates_states,ce2_workspace_states
+0,-0.5772,10,1.752982e-02,,1.0000,0.000000,0.000000,0.0000,0.000000,0.000000,0.0000,0.000000,0.000000,0.0000,0,0,0.000000,0,0,0
