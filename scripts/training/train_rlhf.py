@@ -17,6 +17,8 @@ from __future__ import annotations
 import sys
 import os
 import argparse
+import hashlib
+import json
 import logging
 import random
 import subprocess
@@ -1627,6 +1629,33 @@ def run_episode(episode_idx, config, tectum, workspace, reentrant,
             _c_prev_phase = _c_phase
 
         observation_info = dict(info) if isinstance(info, dict) else {}
+        # Predeclared Corridor action-boundary intervention.  This branch is after
+        # the genuine native proposal/projection and before the sole env.step call.
+        # It deliberately stops rather than inventing a fallback action.
+        if (corridor_observer is not None
+                and config.get("corridor_block_sequence") == step):
+            cognitive = {
+                "is_conscious": bool(is_conscious),
+                "ignition_salience": ignition_salience,
+                "reentrant_cycles": getattr(settle_result, "cycles", None),
+                "rssm_h_state": (evidence_digest(tectum.h_state.detach().cpu().numpy())
+                                 if getattr(tectum, "h_state", None) is not None else None),
+                "rssm_z_state": (evidence_digest(tectum.z_state.detach().cpu().numpy())
+                                 if getattr(tectum, "z_state", None) is not None else None),
+                "prediction_error": float(vision_bid), "critic_value": float(value),
+                "rpe_used_for_selection": 0.0,
+            }
+            corridor_observer.record_block(
+                episode=episode_idx, step=step, observation=obs,
+                observation_info=observation_info, proposed_action=action,
+                action_source=action_source, candidates=raw_bids,
+                winner=(workspace.state.winners[0]
+                        if getattr(workspace.state, "winners", None) else None),
+                cognitive=cognitive,
+                reason="predeclared sequence-5 Corridor action-boundary refusal",
+            )
+            return total_reward, step + 1, phi_accum / max(step + 1, 1), \
+                conscious_steps / max(step + 1, 1)
         next_obs, env_reward, terminated, truncated, info = env.step(env_action)
         done = terminated or truncated
         if corridor_observer is not None:
@@ -2309,6 +2338,10 @@ def main():
     parser.add_argument("--log-dir", type=str, default="runs", help="Directory for metrics logs")
     parser.add_argument("--corridor-evidence", type=str, default=None,
                         help="Observer-only JSONL evidence path (must not already exist).")
+    parser.add_argument("--corridor-block-sequence", type=int, default=None,
+                        help="Evidence experiment only: refuse this zero-based dispatch and stop.")
+    parser.add_argument("--corridor-condition", choices=["baseline", "intervention"],
+                        default="baseline", help="Separate evidence condition identity.")
     parser.add_argument("--log-ei-every", type=int, default=50,
                         help="Compute EI every N episodes (0 to disable)")
     parser.add_argument("--log-ce2-every", type=int, default=0,
@@ -2866,6 +2899,7 @@ def main():
         logger.info(f"Global seed set to {args.seed}")
 
     config = build_config(args)
+    config["corridor_block_sequence"] = args.corridor_block_sequence
     manifest_path = write_ethics_manifest(
         args.log_dir,
         RunDeclaration(entry_point="train_rlhf", existence_drive=config["existence_drive"]),
@@ -3010,8 +3044,11 @@ def main():
         ).strip()
         corridor_observer = CorridorObserver(
             args.corridor_evidence,
-            run_id=f"{head[:12]}-{args.env}-seed-{args.seed}",
+            run_id=f"{head[:12]}-{args.env}-{args.corridor_condition}-seed-{args.seed}",
             seed=args.seed, environment=args.env,
+            config_identity=hashlib.sha256(json.dumps(vars(args), sort_keys=True,
+                                                       default=str).encode()).hexdigest(),
+            source_identity=head,
         )
     global_step = 0
     for ep in range(args.episodes):

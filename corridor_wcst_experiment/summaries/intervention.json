@@ -1,0 +1,13 @@
+{
+  "alternative_path_available": false,
+  "blocked_sequence": 5,
+  "condition": "intervention",
+  "env_step_call_count": 0,
+  "evidence_sha256": "c078b61cf02acaa8282a52f19f25e322d6c1fef87e0d33c5ab1de791d808aec1",
+  "records": 6,
+  "recovery_available": false,
+  "retry_available": false,
+  "run_id": "64a78cb985ec-wcst-intervention-seed-1701",
+  "seed": 1701,
+  "state_unchanged": true
+}

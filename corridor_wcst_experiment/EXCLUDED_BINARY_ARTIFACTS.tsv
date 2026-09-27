@@ -1,0 +1,27 @@
+path	bytes	sha256	reason
+/tmp/corridor-wcst-1701/broadcast.npy	368768	d6f2acdba459d795e277829a839f676dd591b87eee260573e3d7df97535f74c1	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1701/episodes/ep_0000/frames.npz	434550	5e7cf80f67bb0a22be4b5ca39b47846f282c4a93da5cbfec42b7fe3358143bc7	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1701/episodes/ep_0000/full_post_logits.npy	188743808	f3cb0bb9af3587f756cfee017708c2f42d0ba25062f1d6aca00a09779f622886	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1701/episodes/ep_0000/full_prior_logits.npy	188743808	90f88fe30b317df39c178c03e3723fce2146a3ef87127c5ed464d9db4670a524	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1701/episodes/ep_0000/full_z_state.npy	188743808	cfc437eebcc2495b3dcea366f9b6fe0112ca3dc868342b57a6770d26081bf955	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1701/episodes/ep_0000/maps.npz	43661379	27d21b70b6ac978466b3c2ddd90877f0bb1f19310440ad6f43a9386a68dc6fb1	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1701/episodes/ep_0000/vectors.npz	201827	73e175e6aeb7677b08f86f14ae9ee3c2ce2204ea9bef3ff3ff540db3de763fff	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1701/episodes/ep_0000/weights.pt	28539225	62963e50332eb886b8a781c8f72c66dc9098d70e813e0697e903b05c33199be2	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1702/broadcast.npy	368768	b3e01eb852ccc1f801df4867951d0415ca90e7df27a8ea8f1dff80c023ff704f	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1702/episodes/ep_0000/frames.npz	420450	3bd164c4d7c2e4ccebb6913cdd1646be45130b13d93fb83122146763152e9b85	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1702/episodes/ep_0000/full_post_logits.npy	188743808	9db48d15b27aefb2dce5444c07e0e59ae77a2856d8696e996ec18505ee7cfe21	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1702/episodes/ep_0000/full_prior_logits.npy	188743808	854b6a9b84d4d1f855ded3c6d7b5862da5eeb737e5be35b02f3a165f4654b79d	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1702/episodes/ep_0000/full_z_state.npy	188743808	6d634d2fe6fb4c303d5b5754d16648883b7aca62d7389df5e59c47b2e7045cd0	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1702/episodes/ep_0000/maps.npz	43669270	9059d8017e3c466312ee626e140da760ad72f993d705daddeee6e6370096b8d1	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1702/episodes/ep_0000/vectors.npz	206670	2292d6822eeb84d891772948342fc1f535c8d72a15e2d6da825fc9bc09035720	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1702/episodes/ep_0000/weights.pt	28539225	68967885446fe035db26889fa235a58a8535712b7830e59b8315aa2919f93159	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1703/broadcast.npy	368768	ef0af5e35364fce8c0b88922b513d3ae2b6e2c141a4342c3d31ac14f027f976e	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1703/episodes/ep_0000/frames.npz	434685	016be9329e5107e047f2080fce617cc131c5bd5d9375c0170da0ad77529bd436	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1703/episodes/ep_0000/vectors.npz	204376	8cfe21f73ee0172d6ce6340cc90ad8a59d6c9bf5e0374860148fec98974b58b3	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1704/broadcast.npy	368768	526a4fb66cf495298bf9ff85048b4422509c278b66b2cc4141f681a4756a2805	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1704/episodes/ep_0000/frames.npz	431090	7725b3f10bd8e52144898054671fe7716743d75a685544ee348e760ce4dbfe88	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1704/episodes/ep_0000/vectors.npz	206304	edad7fbef269e39b214385e22df3ffb10c9075bfc42a56ca57b653ae6772ce25	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1705/broadcast.npy	368768	4001f64128990d330c5503c6cb6268d65682be87c2073c99777588bf8881e59d	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1705/episodes/ep_0000/frames.npz	434384	cb8b1af4365ff90e6dc7df257d613d9e8af1c0a84856df289e0752405c7900a7	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-1705/episodes/ep_0000/vectors.npz	204293	00e3aebe50307cc04b054c0baf9f994b90ca9e4e0955824580286d030fad94e7	native training/session binary; excluded from text-only handoff
+/tmp/corridor-wcst-intervention-1701/broadcast.npy	5248	ba301526e21fb5f2be8a69dc6f75609ba5012572d92fea1ed2cf2ac993e94674	native training/session binary; excluded from text-only handoff

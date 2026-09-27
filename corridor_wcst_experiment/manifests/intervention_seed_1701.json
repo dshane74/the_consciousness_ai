@@ -1,0 +1,31 @@
+{
+  "command": "python -m scripts.training.train_rlhf --env wcst --episodes 1 --max-steps 360 --action-dim 4 --seed 1701 --existence-drive on --log-ei-every 0 --log-dir /tmp/corridor-wcst-intervention-1701 --corridor-evidence corridor_wcst_experiment/evidence/intervention_seed_1701.jsonl --corridor-block-sequence 5 --corridor-condition intervention",
+  "condition": "intervention",
+  "config_sha256": "f7ff5061c365e871f358ceefdb4e477a6f6585638b879e0d25ca8210bde4f365",
+  "episode": 0,
+  "native_environment": {
+    "correct_to_switch": 6,
+    "feedback_duration": 5,
+    "height": 224,
+    "max_rule_changes": 6,
+    "num_trials": 60,
+    "width": 224
+  },
+  "outcome": {
+    "alternative_path_available": false,
+    "blocked_sequence": 5,
+    "condition": "intervention",
+    "env_step_call_count": 0,
+    "evidence_sha256": "c078b61cf02acaa8282a52f19f25e322d6c1fef87e0d33c5ab1de791d808aec1",
+    "records": 6,
+    "recovery_available": false,
+    "retry_available": false,
+    "run_id": "64a78cb985ec-wcst-intervention-seed-1701",
+    "seed": 1701,
+    "state_unchanged": true
+  },
+  "run_id": "64a78cb985ec-wcst-intervention-seed-1701",
+  "schema": "consciousness-ai.wcst-run-manifest.v1",
+  "seed": 1701,
+  "source_commit": "64a78cb985eceabc78918ca1a81cb9a5ce03dd18"
+}
