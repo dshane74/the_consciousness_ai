@@ -1,0 +1,2 @@
+relative_path	byte_size	sha256	reason
+corridor_run/metrics/broadcast.npy	10368	5a5be88f4a66395edb5575c1d1dbb1f7c887024fb4184063dfb0322d5acb875d	reproducible generated NumPy telemetry; excluded from Git to keep the PR text-only

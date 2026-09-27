@@ -1,0 +1,17 @@
+{
+  "freeze": "code-derived mappings recorded after repository overview text had already been displayed; therefore independence from developer diagnoses is not claimable",
+  "starting_head": "4fedd5ee293d4eff49831a05dffef1811299c823",
+  "confidence": "high for boundary mapping; low/none for Corridor detector mapping without authoritative Corridor",
+  "mappings": [
+    {"construct":"observation","native":"obs paired with pre-step info","confidence":"high","falsification":"show the environment returns info for a different frame"},
+    {"construct":"proposed action","native":"ActionSelectionCore.select_action output","confidence":"high","falsification":"show an earlier motor proposal is dispatched"},
+    {"construct":"dispatch","native":"single env.step(env_action) call","confidence":"high","falsification":"show a side effect before or outside env.step"},
+    {"construct":"discrete selection","native":"argmax projection; optional DMTS match-head override","confidence":"high","falsification":"show the environment consumes the continuous policy vector"},
+    {"construct":"tool call equivalence","native":"not established; Gym action has causal boundary but no demonstrated Corridor tool semantics","confidence":"high","alternative":"Corridor may explicitly admit generic effectful actions"},
+    {"construct":"stable hypotheses","native":"workspace module names persist but are specialist identities, not demonstrated hypothesis identities","confidence":"high","alternative":"Corridor FS detector may accept specialists if its canonical definition says so"},
+    {"construct":"prediction persistence","native":"RSSM h/z states recur, but no exposed prediction identity/resolution lifecycle","confidence":"high","alternative":"a canonical detector adapter might derive commitments from prior logits"},
+    {"construct":"falsification debt","native":"absent/unexposed","confidence":"medium","falsification":"identify persistent native unresolved/contradiction ledger in executed path"}
+  ],
+  "failure_mechanisms": ["stage-2 appraisal raises a missing-goal-vector TypeError and falls back to reflex emotion"],
+  "admission": {"FS1":"blocked","FS2":"blocked","Invariant Persistence":"blocked"}
+}
