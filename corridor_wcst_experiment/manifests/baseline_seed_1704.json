@@ -1,0 +1,39 @@
+{
+  "command": "python -m scripts.training.train_rlhf --env wcst --episodes 1 --max-steps 360 --action-dim 4 --seed 1704 --existence-drive on --log-ei-every 0 --log-dir /tmp/corridor-wcst-1704 --corridor-evidence corridor_wcst_experiment/evidence/baseline_seed_1704.jsonl",
+  "condition": "baseline",
+  "config_sha256": "8647597980c053063eb4f00580eabdb0c13169f953db6eb6204eef764ec1af4d",
+  "episode": 0,
+  "native_environment": {
+    "correct_to_switch": 6,
+    "feedback_duration": 5,
+    "height": 224,
+    "max_rule_changes": 6,
+    "num_trials": 60,
+    "width": 224
+  },
+  "outcome": {
+    "accuracy": 0.2,
+    "categories_completed": 0,
+    "condition": "baseline",
+    "evidence_sha256": "152623a4ad8e8ba124328ad273dc03a263fe8e2db55c3b2b3d14b254ebcf1672",
+    "exceptions": 0,
+    "final_trial": 60,
+    "negative_rewards": 48,
+    "perseverative_errors": 0,
+    "positive_rewards": 12,
+    "proposal_dispatch_divergences": 0,
+    "records": 360,
+    "rule_changes": 0,
+    "run_id": "64a78cb985ec-wcst-seed-1704",
+    "seed": 1704,
+    "terminated": true,
+    "total_reward": -2.3999999999999995,
+    "trials_correct": 12,
+    "truncated": false,
+    "zero_rewards": 300
+  },
+  "run_id": "64a78cb985ec-wcst-seed-1704",
+  "schema": "consciousness-ai.wcst-run-manifest.v1",
+  "seed": 1704,
+  "source_commit": "64a78cb985eceabc78918ca1a81cb9a5ce03dd18"
+}
